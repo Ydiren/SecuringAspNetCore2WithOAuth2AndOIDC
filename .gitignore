@@ -4,3 +4,6 @@
 
 /Starter Files/ImageGallery/.vs/ImageGallery/v15
 /.vs/SecuringAspNetCore2WithOAuth2AndOIDC/v15
+/Progress/ImageGallery/.vs
+**/bin/
+**/obj/
