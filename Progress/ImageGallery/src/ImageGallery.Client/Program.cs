@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore;
+﻿using Microsoft.ApplicationInsights.Extensibility.Implementation;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
 namespace ImageGallery.Client
@@ -7,6 +8,7 @@ namespace ImageGallery.Client
     {
         public static void Main(string[] args)
         {
+            TelemetryDebugWriter.IsTracingDisabled = true;
             BuildWebHost(args).Run();
         }
 

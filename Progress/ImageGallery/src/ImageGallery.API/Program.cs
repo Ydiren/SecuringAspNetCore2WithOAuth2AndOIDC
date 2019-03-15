@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using Microsoft.ApplicationInsights.Extensibility.Implementation;
 
 namespace ImageGallery.API
 {
@@ -12,6 +13,7 @@ namespace ImageGallery.API
     {
         public static void Main(string[] args)
         {
+            TelemetryDebugWriter.IsTracingDisabled = true;
             var host = BuildWebHost(args);
 
             // migrate & seed the database.  Best practice = in Main, using service scope

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights.Extensibility.Implementation;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ namespace Marvin.IDP
     {
         public static void Main(string[] args)
         {
+            TelemetryDebugWriter.IsTracingDisabled = true;
             CreateWebHostBuilder(args).Build().Run();
         }
 
