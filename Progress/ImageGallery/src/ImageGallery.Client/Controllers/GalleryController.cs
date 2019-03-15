@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using IdentityModel.Client;
 
 namespace ImageGallery.Client.Controllers
 {
@@ -168,6 +169,28 @@ namespace ImageGallery.Client.Controllers
             }
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
+        }
+
+        public async Task<IActionResult> OrderFrame()
+        {
+            var discoveryClient = new DiscoveryClient("https://localhost:44343/");
+            var metaDataResponse = await discoveryClient.GetAsync();
+
+            var userInfoClient = new UserInfoClient(metaDataResponse.UserInfoEndpoint);
+
+            var accessToken = await HttpContext.GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+            var response = await userInfoClient.GetAsync(accessToken);
+
+            if (response.IsError)
+            {
+                throw new Exception("Problem accessing the UserInfo endpoint.",
+                                    response.Exception);
+            }
+
+            var address = response.Claims.FirstOrDefault(claim => claim.Type == "address")?.Value;
+
+            return View(new OrderFrameViewModel(address));
         }
 
         public async Task WriteOutIdentityInformation()
