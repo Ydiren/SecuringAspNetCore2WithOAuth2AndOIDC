@@ -1,4 +1,5 @@
-﻿using System.IdentityModel.Tokens.Jwt;
+﻿using System.ComponentModel;
+using System.IdentityModel.Tokens.Jwt;
 using ImageGallery.Client.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -49,12 +50,14 @@ namespace ImageGallery.Client
                                                   // options.SignedOutCallbackPath = new PathString("...");
                                                   options.Scope.Add("openid");
                                                   options.Scope.Add("profile");
+                                                  options.Scope.Add("address");
                                                   options.SaveTokens = true;
                                                   options.ClientSecret = "secret";
                                                   options.GetClaimsFromUserInfoEndpoint = true;
                                                   // Prevent login method being removed from returned Claims
                                                   options.ClaimActions.Remove("amr");
                                                   // Remove Session Id and ID Provider from returned claims
+                                                  // These are defined in the default set of returned claims in the IdentityServer4 code
                                                   options.ClaimActions.DeleteClaim("sid");
                                                   options.ClaimActions.DeleteClaim("idp");
                                               });
