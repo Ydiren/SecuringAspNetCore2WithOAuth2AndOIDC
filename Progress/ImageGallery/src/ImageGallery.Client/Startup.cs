@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using ImageGallery.Client.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -51,6 +52,11 @@ namespace ImageGallery.Client
                                                   options.SaveTokens = true;
                                                   options.ClientSecret = "secret";
                                                   options.GetClaimsFromUserInfoEndpoint = true;
+                                                  // Prevent login method being removed from returned Claims
+                                                  options.ClaimActions.Remove("amr");
+                                                  // Remove Session Id and ID Provider from returned claims
+                                                  options.ClaimActions.DeleteClaim("sid");
+                                                  options.ClaimActions.DeleteClaim("idp");
                                               });
         }
 
