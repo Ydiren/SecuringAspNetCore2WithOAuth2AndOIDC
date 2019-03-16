@@ -92,7 +92,16 @@ namespace Marvin.IDP
             return new List<ApiResource>
             {
                 // Include the given claims when requesting the API scope
-                new ApiResource("imagegalleryapi", "Image Gallery API", new List<string> { "role" })
+                new ApiResource("imagegalleryapi", "Image Gallery API", new List<string>
+                {
+                    "role"
+                })
+                {
+                    ApiSecrets =
+                    {
+                        new Secret("apisecret".Sha256())
+                    }
+                }
             };
         }
 
@@ -105,6 +114,7 @@ namespace Marvin.IDP
                            ClientName = "Image Gallery",
                            ClientId = "imagegalleryclient",
                            AllowedGrantTypes = GrantTypes.Hybrid,
+                           AccessTokenType = AccessTokenType.Reference,
                            // IdentityTokenLifetime = 5 mins by default
                            // AuthorizationCodeLifetime = 5 mins by default
                            // AccessTokenLifetime = Defaults to 1 hour (number in seconds)
