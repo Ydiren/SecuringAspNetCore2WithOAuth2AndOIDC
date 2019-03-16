@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 namespace ImageGallery.API
 {
     using IdentityServer4.AccessTokenValidation;
+    using ImageGallery.API.Authorization;
+    using Microsoft.AspNetCore.Authorization;
 
     public class Startup
     {
@@ -26,6 +28,24 @@ namespace ImageGallery.API
         public void ConfigureServices(IServiceCollection services)
         {
              services.AddMvc();
+
+             // Add Authorization policy 
+             // User must
+             // - Must be Authenticated
+             // - Own the image that they are trying to access
+             services.AddAuthorization(authorizationOptions =>
+             {
+                 authorizationOptions.AddPolicy(
+                     "MustOwnImage",
+                     policyBuilder =>
+                     {
+                         policyBuilder.RequireAuthenticatedUser();
+                         policyBuilder.AddRequirements(new MustOwnImageRequirement());
+                     });
+             });
+
+             // Register handler with IoC Container
+             services.AddScoped<IAuthorizationHandler, MustOwnImageHandler>();
 
              services.AddAuthentication(
                          IdentityServerAuthenticationDefaults.AuthenticationScheme)

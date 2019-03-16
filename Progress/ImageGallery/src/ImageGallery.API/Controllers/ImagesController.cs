@@ -44,6 +44,8 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetImage")]
+        // ABAC
+        [Authorize(Policy = "MustOwnImage")]
         public IActionResult GetImage(Guid id)
         {          
             var imageFromRepo = _galleryRepository.GetImage(id);
@@ -119,6 +121,8 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpDelete("{id}")]
+        // ABAC
+        [Authorize(Policy = "MustOwnImage")]
         public IActionResult DeleteImage(Guid id)
         {
             
@@ -140,6 +144,8 @@ namespace ImageGallery.API.Controllers
         }
 
         [HttpPut("{id}")]
+        // ABAC
+        [Authorize(Policy = "MustOwnImage")]
         public IActionResult UpdateImage(Guid id, 
             [FromBody] ImageForUpdate imageForUpdate)
         {
