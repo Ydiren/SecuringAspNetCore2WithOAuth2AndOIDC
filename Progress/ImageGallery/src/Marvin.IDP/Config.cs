@@ -97,6 +97,7 @@ namespace Marvin.IDP
                     "role"
                 })
                 {
+                    // Defined secret to gain access to the introspection endpoint (to validate reference tokens)
                     ApiSecrets =
                     {
                         new Secret("apisecret".Sha256())

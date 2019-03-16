@@ -53,6 +53,7 @@ namespace ImageGallery.API
                      {
                          options.Authority = "https://localhost:44343/";
                          options.ApiName = "imagegalleryapi";
+                         // Secret for the introspection endpoint
                          options.ApiSecret = "apisecret";
                      });
             // register the DbContext on the container, getting the connection string from
