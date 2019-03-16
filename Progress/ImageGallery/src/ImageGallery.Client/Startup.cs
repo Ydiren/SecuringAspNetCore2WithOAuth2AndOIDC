@@ -55,10 +55,13 @@ namespace ImageGallery.Client
                                                   options.ResponseType = "code id_token";
                                                   //options.CallbackPath = new PathString("...");
                                                   // options.SignedOutCallbackPath = new PathString("...");
+
+                                                  // Scopes to request
                                                   options.Scope.Add("openid");
                                                   options.Scope.Add("profile");
                                                   options.Scope.Add("address");
                                                   options.Scope.Add("roles");
+                                                  options.Scope.Add("imagegalleryapi");
                                                   options.SaveTokens = true;
                                                   options.ClientSecret = "secret";
                                                   options.GetClaimsFromUserInfoEndpoint = true;

@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 
 namespace ImageGallery.API
 {
+    using IdentityServer4.AccessTokenValidation;
+
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -24,7 +26,14 @@ namespace ImageGallery.API
         public void ConfigureServices(IServiceCollection services)
         {
              services.AddMvc();
-        
+
+             services.AddAuthentication(
+                         IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                     .AddIdentityServerAuthentication(options =>
+                     {
+                         options.Authority = "https://localhost:44343/";
+                         options.ApiName = "imagegalleryapi";
+                     });
             // register the DbContext on the container, getting the connection string from
             // appSettings (note: use this during development; in a production environment,
             // it's better to store the connection string in an environment variable)
@@ -55,6 +64,8 @@ namespace ImageGallery.API
                     });
                 });
             }
+
+            app.UseAuthentication();
 
             app.UseStaticFiles();
 

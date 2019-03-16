@@ -10,7 +10,10 @@ using System.IO;
 
 namespace ImageGallery.API.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+
     [Route("api/images")]
+    [Authorize]
     public class ImagesController : Controller
     {
         private readonly IGalleryRepository _galleryRepository;

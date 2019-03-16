@@ -7,3 +7,4 @@
 /Progress/ImageGallery/.vs
 **/bin/
 **/obj/
+/Progress/ImageGallery/src/ImageGallery.Client/netcoreapp2.0
