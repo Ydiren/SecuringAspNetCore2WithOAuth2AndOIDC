@@ -18,6 +18,8 @@ using IdentityModel.Client;
 
 namespace ImageGallery.Client.Controllers
 {
+    using System.Net;
+
     [Authorize]
     public class GalleryController : Controller
     {
@@ -45,7 +47,12 @@ namespace ImageGallery.Client.Controllers
                     JsonConvert.DeserializeObject<IList<Image>>(imagesAsString).ToList());
 
                 return View(galleryIndexViewModel);
-            }          
+            }
+            else if (response.StatusCode == HttpStatusCode.Unauthorized ||
+                     response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                return RedirectToAction("AccessDenied", "Authorization");
+            }
 
             throw new Exception($"A problem happened while calling the API: {response.ReasonPhrase}");
         }
