@@ -95,6 +95,7 @@ namespace Marvin.IDP
                 new ApiResource("imagegalleryapi", "Image Gallery API", new List<string> { "role" })
             };
         }
+
         public static IEnumerable<Client> GetClients()
         {
             return new List<Client>
@@ -104,6 +105,10 @@ namespace Marvin.IDP
                            ClientName = "Image Gallery",
                            ClientId = "imagegalleryclient",
                            AllowedGrantTypes = GrantTypes.Hybrid,
+                           // IdentityTokenLifetime = 5 mins by default
+                           // AuthorizationCodeLifetime = 5 mins by default
+                           // AccessTokenLifetime = Defaults to 1 hour (number in seconds)
+                           AccessTokenLifetime = 120,
                            RedirectUris = new List<string>
                                           {
                                               "https://localhost:44302/signin-oidc"
