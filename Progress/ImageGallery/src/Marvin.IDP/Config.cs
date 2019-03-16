@@ -25,7 +25,9 @@ namespace Marvin.IDP
                                         new Claim("given_name", "Frank"),
                                         new Claim("family_name", "Underwood"),
                                         new Claim("address", "Main Road 1"),
-                                        new Claim("role", "FreeUser")
+                                        new Claim("role", "FreeUser"),
+                                        new Claim("subscriptionlevel", "FreeUser"),
+                                        new Claim("country", "nl")
                                     }
                        },
                        new TestUser
@@ -39,7 +41,9 @@ namespace Marvin.IDP
                                         new Claim("given_name", "Claire"),
                                         new Claim("family_name", "Underwood"),
                                         new Claim("address", "Big Street 2"),
-                                        new Claim("role", "PayingUser")
+                                        new Claim("role", "PayingUser"),
+                                        new Claim("subscriptionlevel", "PayingUser"),
+                                        new Claim("country", "be")
                                     }
                        }
                    };
@@ -52,12 +56,35 @@ namespace Marvin.IDP
         public static IEnumerable<IdentityResource> GetIdentityResources()
         {
             return new List<IdentityResource>
-                   {
-                       new IdentityResources.OpenId(),
-                       new IdentityResources.Profile(),
-                       new IdentityResources.Address(),
-                       new IdentityResource("roles", "Your role(s)", new List<string> { "role" })
-                   };
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+                new IdentityResources.Address(),
+                new IdentityResource("roles",
+                                     "Your role(s)",
+                                     // Claims related to this scope
+                                     new List<string>
+                                     {
+                                         "role"
+                                     }),
+                // Add "country" scope
+                new IdentityResource("country",
+                                     "The country you're living in",
+                                     // Claims related to this scope
+                                     new List<string>
+                                     {
+                                         "country"
+                                     }),
+                // Add "subscription" scope
+                new IdentityResource("subscriptionlevel",
+                                     "Your subscription level",
+                                     // Claims related to this scope
+                                     new List<string>
+                                     {
+                                         "subscriptionlevel"
+                                     })
+
+            };
         }
 
         public static IEnumerable<ApiResource> GetApiResources()
@@ -91,7 +118,9 @@ namespace Marvin.IDP
                                IdentityServerConstants.StandardScopes.Profile,
                                IdentityServerConstants.StandardScopes.Address,
                                "roles",
-                               "imagegalleryapi"
+                               "imagegalleryapi",
+                               "country",
+                               "subscriptionlevel"
                            },
                            ClientSecrets =
                            {
